@@ -7,17 +7,9 @@ const { NODE_ENV } = require('./config')
 
 const app = express()
 
-
-
-// Procfile
-
-
-
-
-
 const morganOption = (NODE_ENV === 'production')
-  ? 'tiny'
-  : 'common';
+    ? 'tiny'
+    : 'common';
 
 app.use(morgan(morganOption))
 app.use(helmet())
