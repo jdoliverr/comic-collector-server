@@ -5,6 +5,14 @@ const CollectionService = {
         return db
             .select('*')
             .from('comic_collector_collection')
+            .orderBy('id')
+    },
+    getUserComics(db, user_id) {
+        return db
+            .select('*')
+            .from('comic_collector_collection')
+            .where({ user_id })
+            .orderBy('id')
     },
     insertComic(db, newComic) {
         return db
