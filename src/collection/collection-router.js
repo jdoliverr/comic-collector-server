@@ -49,5 +49,21 @@ collectionRouter
             })
             .catch(next)
     })
+    .patch(jsonBodyParser, (req, res, next) => {
+        const { is_read } = req.body
+        const comicToUpdate = { is_read }
 
+        CollectionService.updateComic(
+            req.app.get('db'),
+            req.params.id,
+            comicToUpdate
+            )
+            .then(comic => {
+                res.json(comic)
+            })
+            .then(() => {
+            res.status(204).end()
+            })
+            .catch(next)
+    })
 module.exports = collectionRouter

@@ -39,13 +39,29 @@ wishlistRouter
 wishlistRouter
     .route('/:id')
     .delete((req, res, next) => {
-        console.log(req.params)
         WishlistService.deleteComic(
             req.app.get('db'),
             req.params.id
         )
             .then(() => {
                 res.status(204).end()
+            })
+            .catch(next)
+    })
+    .patch(jsonBodyParser, (req, res, next) => {
+        const { is_read } = req.body
+        const comicToUpdate = { is_read }
+
+        WishlistService.updateComic(
+            req.app.get('db'),
+            req.params.id,
+            comicToUpdate
+            )
+            .then(comic => {
+                res.json(comic)
+            })
+            .then(() => {
+            res.status(204).end()
             })
             .catch(next)
     })
