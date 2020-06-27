@@ -6,6 +6,7 @@ const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const collectionRouter = require('./collection/collection-router')
 const wishlistRouter = require('./wishlist/wishlist-router')
+const authRouter = require('./auth/auth-router')
 
 const app = express()
 
@@ -19,6 +20,7 @@ app.use(cors())
 
 app.use('/api/collection', collectionRouter)
 app.use('/api/wishlist', wishlistRouter)
+app.use('/api/auth', authRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello, world!')

@@ -1,11 +1,13 @@
 const express = require('express')
 const CollectionService = require('./collection-service')
+const { requireAuth } = require('../middleware/jwt-auth')
 
 const collectionRouter = express.Router()
 const jsonBodyParser = express.json()
 
 collectionRouter
     .route('/')
+    .all(requireAuth)
     .get((req, res, next) => {
         CollectionService.getAllComics(req.app.get('db'))
             .then(comics => {
@@ -15,10 +17,11 @@ collectionRouter
     })
 
 collectionRouter
-    .route('/')    
+    .route('/')
+    .all(requireAuth)
     .post(jsonBodyParser, (req, res, next) => {
-        const { comic_title, comic_author, is_read, description, user_id } = req.body
-        const newComic = { comic_title, comic_author, is_read, description, user_id }
+        const { comic_title, comic_author, is_read, description, user_id, issue } = req.body
+        const newComic = { comic_title, comic_author, is_read, description, user_id, issue }
 
         for (const [key, value] of Object.entries(newComic))
             if (value == null)
@@ -38,6 +41,7 @@ collectionRouter
 
 collectionRouter
     .route('/:id')
+    .all(requireAuth)
     .delete((req, res, next) => {
         console.log(req.params)
         CollectionService.deleteComic(

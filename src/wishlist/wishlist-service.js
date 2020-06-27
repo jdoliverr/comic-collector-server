@@ -6,6 +6,13 @@ const WishlistService = {
             .select('*')
             .from('comic_collector_wishlist')
     },
+    getUserComics(db, user_id) {
+        return db
+            .select('*')
+            .from('comic_collector_wishlist')
+            .where({ user_id })
+            .orderBy('id')
+    },
     insertComic(db, newComic) {
         return db
             .insert(newComic)

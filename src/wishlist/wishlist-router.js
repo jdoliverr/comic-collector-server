@@ -1,11 +1,13 @@
 const express = require('express')
 const WishlistService = require('./wishlist-service')
+const { requireAuth } = require('../middleware/jwt-auth')
 
 const wishlistRouter = express.Router()
 const jsonBodyParser = express.json()
 
 wishlistRouter
     .route('/')
+    .all(requireAuth)
     .get((req, res, next) => {
         WishlistService.getAllComics(req.app.get('db'))
             .then(comics => {
@@ -16,9 +18,10 @@ wishlistRouter
 
 wishlistRouter
     .route('/')
+    .all(requireAuth)
     .post(jsonBodyParser, (req, res, next) => {
-        const { comic_title, comic_author, is_read, description, user_id } = req.body
-        const newComic = { comic_title, comic_author, is_read, description, user_id }
+        const { comic_title, comic_author, is_read, description, user_id, issue } = req.body
+        const newComic = { comic_title, comic_author, is_read, description, user_id, issue }
 
         for (const [key, value] of Object.entries(newComic))
             if (value == null)
@@ -38,6 +41,7 @@ wishlistRouter
 
 wishlistRouter
     .route('/:id')
+    .all(requireAuth)
     .delete((req, res, next) => {
         WishlistService.deleteComic(
             req.app.get('db'),
