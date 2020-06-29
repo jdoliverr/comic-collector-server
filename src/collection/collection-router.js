@@ -9,7 +9,7 @@ collectionRouter
     .route('/')
     .all(requireAuth)
     .get((req, res, next) => {
-        CollectionService.getAllComics(req.app.get('db'))
+        CollectionService.getUserComics(req.app.get('db'), req.user.id)
             .then(comics => {
                 res.json(comics)
             })

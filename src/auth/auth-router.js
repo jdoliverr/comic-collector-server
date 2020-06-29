@@ -21,6 +21,7 @@ authRouter
             loginUser.user_name
         )
             .then(dbUser => {
+                console.log('user', dbUser)
                 if (!dbUser)
                     return res.status(400).json({
                         error: 'Incorrect user_name or password',
@@ -39,6 +40,7 @@ authRouter
                         const sub = dbUser.user_name
                         const payload = { user_id: dbUser.id }
                         res.send({
+                            user_id: payload.user_id,
                             authToken: AuthService.createJwt(sub, payload),
                         })
                     })

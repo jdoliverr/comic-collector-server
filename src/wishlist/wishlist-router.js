@@ -9,7 +9,7 @@ wishlistRouter
     .route('/')
     .all(requireAuth)
     .get((req, res, next) => {
-        WishlistService.getAllComics(req.app.get('db'))
+        WishlistService.getUserComics(req.app.get('db'), req.user.id)
             .then(comics => {
                 res.json(comics)
             })
