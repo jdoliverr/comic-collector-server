@@ -9,15 +9,15 @@ const AuthService = {
             .first()
     },
     comparePasswords(password, hash) {
-        // return bcrypt.compare(password, hash)
-        return new Promise((resolve, reject) => {
-            if(password === hash) {
-            resolve(true)
-        }
-        else{
-            reject(false)
-        }
-        })
+        return bcrypt.compare(password, hash)
+        // return new Promise((resolve, reject) => {
+        //     if(password === hash) {
+        //     resolve(true)
+        // }
+        // else{
+        //     reject(false)
+        // }
+        // })
         
     },
     createJwt(subject, payload) {
