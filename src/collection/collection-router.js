@@ -43,7 +43,7 @@ collectionRouter
     .route('/:id')
     .all(requireAuth)
     .delete((req, res, next) => {
-        console.log(req.params)
+        
         CollectionService.deleteComic(
             req.app.get('db'),
             req.params.id

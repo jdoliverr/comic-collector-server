@@ -9,19 +9,19 @@ authRouter
     .post('/login', jsonBodyParser, (req, res, next) => {
         const { user_name, password } = req.body
         const loginUser = { user_name, password }
-        console.log(1)
+        
         for (const [key, value] of Object.entries(loginUser))
             if (value == null)
                 return res.status(400).json({
                     error: `Missing '${key}' in request body`
                 })
-                console.log(2)
+                
         AuthService.getUserWithUserName(
             req.app.get('db'),
             loginUser.user_name
         )
             .then(dbUser => {
-                console.log('user', dbUser)
+                
                 if (!dbUser)
                     return res.status(400).json({
                         error: 'Incorrect user_name or password',
@@ -29,7 +29,7 @@ authRouter
                     
                 return AuthService.comparePasswords(loginUser.password, dbUser.password)
                     .then(compareMatch => {
-                        console.log(compareMatch, 3)
+                        
                         if (!compareMatch) {
                             res.statusMessage = 'message'
                             return res.status(400).json({
