@@ -1,26 +1,88 @@
-# Express Boilerplate!
+<!-- Title -->
+Comic Collector
 
-This is a boilerplate project used for starting new projects!
+<!-- Link to live app -->
+[Live link](https://comic-collector.vercel.app/)
 
-## Set up
+<!-- Api Documentation -->
+Base url- https://peaceful-lowlands-92283.herokuapp.com/api/
+Endpoints
+    path('/collection')
+        requires headers: { 
+            "Authorization": "bearer (user auth token)" 
+            }
+        
+        GET return all comics in specified users collection(user dtermined by authtoken)
+        
+        POST request body: { 
+            "comic_title": (text), 
+            "comic_author": (text), 
+            "is_read": (boolean), 
+            "description": (text), 
+            "user_id": (integer associated with user), 
+            "issue": (integer)
+            }
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+    path('/collection/:id')
+        requires headers: { 
+            "Authorization": "bearer (user auth token)" 
+            }
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+        DELETE :id should be the id of the comic you wish to delete
 
-## Scripts
+        PATCH :id should be the id of the comic you wish to update. only is_read can be updated at this time
+            request body: {
+                "is_read": (boolean)
+            }
 
-Start the application `npm start`
+    path('/wishlist')
+        requires headers: { 
+            "Authorization": "bearer (user auth token)" 
+            }
+        
+        GET return all comics in specified users wishlist(user dtermined by authtoken)
+        
+        POST request body: { 
+            "comic_title": (text), 
+            "comic_author": (text), 
+            "is_read": (boolean), 
+            "description": (text), 
+            "user_id": (integer associated with user), 
+            "issue": (integer)
+            }
 
-Start nodemon for the application `npm run dev`
+    path('/wishlist/:id')
+        requires headers: { 
+            "Authorization": "bearer (user auth token)" 
+            }
 
-Run the tests `npm test`
+        DELETE :id should be the id of the comic you wish to delete
 
-## Deploying
+        PATCH :id should be the id of the comic you wish to update. only is_read can be updated at this time
+            request body: {
+                "is_read": (boolean)
+            }
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+    path('/auth/login')
+        POST compare login credentials to user database to verify login info requires headers: {
+                "content-type": "application/json",
+            },
+            body{
+                "user_name": (username),
+                "password": (password)
+            }
+
+    path('/users')
+        POST register a username and password for a new user. password must be longer than 8 characters. password must be less than 72 characters. Password must not start with or end with empty spaces. Password must contain 1 upper case, one lower case, one number, and one special character. Username must be unique.
+        requires headers: {
+                "content-type": "application/json",
+            },
+            body{
+                "user_name": (unique username),
+                "password": (valid password)
+            }
+<!-- Screenshots -->
+![Alt text](https://github.com/jdoliverr/comic-collector/blob/master/public/images/ex-comic-collection.jpg?raw=true)
+
+<!-- Summary -->
+Comic collector is designed as a way to digitally keep track of comic book collections. After creating an account and signing in users can add comic books they own to their collection list. Additionally users can add comic book to their wishlist if they don't own them so they know what titles they want to purchase. When adding a comic to either list the user will supply a title, author, issue number, and description as well as indidcate if they have read that comic. All this information is then displayed back to the user. Both lists have search and sort functionality. The sort funtionality sorts the list of comics alphabetically by either title or author. The search field takes user input and searches for comics whose titles matches the given input. All comics have two buttons, one to delete the comic and one to toggle whether the user has read it.  
