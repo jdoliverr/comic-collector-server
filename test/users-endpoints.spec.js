@@ -7,7 +7,7 @@ const { expect } = require('chai')
 describe.only('Users Endpoints', function () {
     let db
 
-    const { testUsers } = helpers.makeArticlesFixtures()
+    const { testUsers } = helpers.makeComicsFixtures()
     const testUser = testUsers[0]
 
     before('make knex instance', () => {
@@ -121,7 +121,6 @@ describe.only('Users Endpoints', function () {
                 const newUser = {
                     user_name: 'test user_name',
                     password: '11AAaa!!',
-                    full_name: 'test full_name',
                 }
                 return supertest(app)
                     .post('/api/users')
@@ -130,13 +129,8 @@ describe.only('Users Endpoints', function () {
                     .expect(res => {
                         expect(res.body).to.have.property('id')
                         expect(res.body.user_name).to.eql(newUser.user_name)
-                        expect(res.body.full_name).to.eql(newUser.full_name)
-                        expect(res.body.nickname).to.eql('')
                         expect(res.body).to.not.have.property('password')
                         expect(res.headers.location).to.eql(`/api/users/${res.body.id}`)
-                        const expectedDate = new Date().toLocaleString('en', { timeZone: 'UTC' })
-                        const actualDate = new Date(res.body.date_created).toLocaleString()
-                        expect(actualDate).to.eql(expectedDate)
                     })
                     .expect(res =>
                         db
