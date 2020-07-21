@@ -5,14 +5,14 @@ const CollectionService = {
         return db
             .select('*')
             .from('comic_collector_collection')
-            .orderBy('id')
+            .orderBy('id');
     },
     getUserComics(db, user_id) {
         return db
             .select('*')
             .from('comic_collector_collection')
             .where({ user_id })
-            .orderBy('id')
+            .orderBy('id');
     },
     insertComic(db, newComic) {
         return db
@@ -21,24 +21,24 @@ const CollectionService = {
             .returning('*')
             .then(rows => {
                 return rows[0]
-            })
+            });
     },
     getById(db, id) {
         return db
             .select('*')
             .from('comic_collector_collection')
             .where({ id })
-            .first()
+            .first();
     },
     deleteComic(db, id) {
         return db('comic_collector_collection')
             .where({ id })
-            .delete()
+            .delete();
     },
     updateComic(db, id, newComicFields) {
         return db('comic_collector_collection')
             .where({ id })
-            .update(newComicFields)
+            .update(newComicFields);
     },
 }
 

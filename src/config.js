@@ -4,4 +4,4 @@ module.exports = {
     DATABASE_URL: process.env.DATABASE_URL || 'postgreql://comic_admin@localhost/comic-collector',
     TEST_DATABASE_URL: process.env.TEST_DATABASE_URL || 'postgreql://comic_admin@localhost/comic-collector-test',
     JWT_SECRET: process.env.JWT_SECRET || 'change-this-secret',
-  }
+  };
