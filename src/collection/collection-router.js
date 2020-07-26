@@ -1,13 +1,13 @@
-const express = require('express')
-const CollectionService = require('./collection-service')
-const { requireAuth } = require('../middleware/jwt-auth')
+const express = require('express');
+const CollectionService = require('./collection-service');
+const { requireAuth } = require('../middleware/jwt-auth');
 
-const collectionRouter = express.Router()
-const jsonBodyParser = express.json()
+const collectionRouter = express.Router();
+const jsonBodyParser = express.json();
 
 collectionRouter
     .route('/')
-    .all(requireAuth)
+    // .all(requireAuth)
     .get((req, res, next) => {
         CollectionService.getUserComics(req.app.get('db'), req.user.id)
             .then(comics => {
@@ -18,7 +18,7 @@ collectionRouter
 
 collectionRouter
     .route('/')
-    .all(requireAuth)
+    // .all(requireAuth)
     .post(jsonBodyParser, (req, res, next) => {
         const { comic_title, comic_author, is_read, description, user_id, issue } = req.body;
         const newComic = { comic_title, comic_author, is_read, description, user_id, issue };

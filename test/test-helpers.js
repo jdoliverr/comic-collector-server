@@ -1,11 +1,11 @@
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 
 function makeComicsFixtures() {
-    const testUsers = makeUsersArray()
-    const testThings = makeCollectionArray(testUsers)
-    const testReviews = makeWishlistArray(testUsers, testThings)
-    return { testUsers, testThings, testReviews }
-}
+    const testUsers = makeUsersArray();
+    const testThings = makeCollectionArray(testUsers);
+    const testReviews = makeWishlistArray(testUsers, testThings);
+    return { testUsers, testThings, testReviews };
+};
 
 function cleanTables(db) {
     return db.raw(
@@ -14,8 +14,8 @@ function cleanTables(db) {
         comic_collector_users,
         comic_collector_wishlist
         RESTART IDENTITY CASCADE`
-    )
-}
+    );
+};
 
 function seedUsers(db, users) {
     const preppedUsers = users.map(user => ({
@@ -26,8 +26,8 @@ function seedUsers(db, users) {
     return db.into('comic_collector_users').insert(preppedUsers)
         .then(() =>
             db.raw(`SELECT setval('comic_collector_users_id_seq', ?)`, [preppedUsers[preppedUsers.length - 1].id])
-        )
-}
+        );
+};
 
 function makeUsersArray() {
     return [
@@ -43,8 +43,8 @@ function makeUsersArray() {
             user_name: 'testuser3',
             password: 'Testpassword00#'
         }
-    ]
-}
+    ];
+};
 
 function makeCollectionArray() {
     return [
@@ -69,8 +69,8 @@ function makeCollectionArray() {
             is_read: true,
             description: 'description3'
         }
-    ]
-}
+    ];
+};
 
 function makeWishlistArray() {
     return [
@@ -95,11 +95,11 @@ function makeWishlistArray() {
             is_read: true,
             description: 'description3'
         }
-    ]
-}
+    ];
+};
 
 module.exports = {
     seedUsers,
     cleanTables,
     makeComicsFixtures
-}
+};

@@ -40,7 +40,7 @@ const CollectionService = {
             .where({ id })
             .update(newComicFields);
     },
-}
+};
 
 module.exports = CollectionService;
 

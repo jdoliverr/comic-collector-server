@@ -39,6 +39,6 @@ const WishlistService = {
             .where({ id })
             .update(newComicFields);
     },
-}
+};
 
 module.exports = WishlistService;
